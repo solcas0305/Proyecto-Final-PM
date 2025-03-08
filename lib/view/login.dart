@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'registro.dart';
+import 'home.dart';
 
 void main() {
   runApp(const MyApp());
