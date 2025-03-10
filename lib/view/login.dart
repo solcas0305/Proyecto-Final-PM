@@ -5,6 +5,7 @@ import 'home.dart';
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -17,7 +18,19 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>(); // Clave global para el formulario
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _emailError;
+  String? _passwordError;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +51,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/logo.png'), // Reemplazar con la imagen correcta
+              backgroundImage: AssetImage(''), // logo
             ),
             const SizedBox(height: 20),
             const Text(
@@ -47,32 +60,63 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
             const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'email@gmail.com',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: '**************',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                prefixIcon: Icon(Icons.lock),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                onPressed: () {},
-                child: const Text('Continue', style: TextStyle(color: Colors.white)),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      hintText: 'email@gmail.com',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: Icon(Icons.email),
+                      errorText: _emailError,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingresa un correo';
+                      } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$").hasMatch(value)) {
+                        return 'Por favor ingresa un correo válido';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: '**************',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                      prefixIcon: Icon(Icons.lock),
+                      errorText: _passwordError,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Este campo no puede estar vacío';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Iniciando sesión...')),
+                          );
+                        }
+                      },
+                      child: const Text('Continuar', style: TextStyle(color: Colors.white)),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
@@ -92,7 +136,9 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const Text("¿No tienes cuenta? "),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                   Navigator.pushNamed(context, '/registro');
+                  },
                   child: const Text(
                     'Regístrate.',
                     style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
