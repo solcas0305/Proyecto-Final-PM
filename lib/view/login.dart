@@ -59,11 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor ingresa un correo';
+                            return 'Por favor ingrese un correo';
                           } else if (!RegExp(
                                   r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")
                               .hasMatch(value)) {
-                            return 'Por favor ingresa un correo válido';
+                            return 'Por favor ingrese un correo válido';
                           }
                           return null;
                         },
