@@ -59,11 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese un correo';
+                            return 'Por favor ingresa un correo';
                           } else if (!RegExp(
                                   r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$")
                               .hasMatch(value)) {
-                            return 'Por favor ingrese un correo válido';
+                            return 'Por favor ingresa un correo válido';
                           }
                           return null;
                         },
@@ -97,6 +97,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Iniciando sesión...')),
+                              );
+                              // Navegar a la pantalla de inicio después de la validación
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
