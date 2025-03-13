@@ -31,12 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const Text(
                   'Autos Honduras',
-                  style: TextStyle(fontSize: 18, color: Colors.blue),
+                  style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 25, 119, 196), fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 const CircleAvatar(
                   radius: 50,
-                  //backgroundImage: AssetImage(''), // Agregar logo
+                  backgroundImage: AssetImage('assets/logo.jpg'), // Agregar logo
                 ),
                 const SizedBox(height: 20),
                 const Text(
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         'Regístrate.',
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: Color.fromARGB(255, 25, 119, 196), fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],

@@ -16,7 +16,8 @@ class _RegistroScreenState extends State<RegistroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(  
+      body: Center (
+        child: SingleChildScrollView(  
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
           child: Form( 
@@ -38,6 +39,11 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
+                Image.asset(
+                    'assets/logo.jpg', 
+                    height: 150, 
+                    fit: BoxFit.cover,
+                  ),
                 Text(
                   'Crear cuenta',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -47,11 +53,9 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 SizedBox(height: 20),
-
-                // Nombre
                 TextFormField(
                   controller: _nombreController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     hintText: "Nombre completo",
                     border: OutlineInputBorder(
@@ -67,11 +71,9 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   },
                 ),
                 SizedBox(height: 10),
-
-                // Email
                 TextFormField(
                   controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     hintText: 'email@gmail.com',
                     border: OutlineInputBorder(
@@ -91,8 +93,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   },
                 ),
                 SizedBox(height: 10),
-
-                // Contraseña
                 TextFormField(
                   controller: _passwordController,
                   keyboardType: TextInputType.text,
@@ -112,8 +112,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   },
                 ),
                 SizedBox(height: 20),
-
-                // Botón de continuar
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -134,6 +132,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
           ),
         ),
       ),
+    )
     );
   }
 }
