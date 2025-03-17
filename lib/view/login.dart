@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 20),
                 const CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage('assets/logo.jpg'), // Agregar logo
+                  backgroundImage: AssetImage('assets/logo.jpg'), 
                 ),
                 const SizedBox(height: 20),
                 const Text(
