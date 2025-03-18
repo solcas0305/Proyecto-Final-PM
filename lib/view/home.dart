@@ -24,6 +24,7 @@ class HomeScreen extends StatelessWidget {
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
           IconButton(icon: Icon(Icons.history), onPressed: () {}),
           IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+          IconButton(icon: Icon(Icons.person),onPressed:(){},),
         ],
       ),
       body: SingleChildScrollView(
