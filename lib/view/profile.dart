@@ -2,12 +2,83 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'login.dart';
 
-class PerfilScreen extends StatelessWidget{
-  final String nombre; 
-  final String apellido; 
-  final String correo; 
+class PerfilScreen extends StatefulWidget {
+  final String nombre;
+  final String apellido;
+  final String correo;
+  final String password;
 
-PerfilScreen({required this.nombre, required this. apellido, required this.correo});
+  PerfilScreen({required this.nombre, required this.apellido, required this.correo, required this.password});
+
+  @override
+  _PerfilScreenState createState() => _PerfilScreenState();
+}
+
+class _PerfilScreenState extends State<PerfilScreen> {
+  late String nombre;
+  late String apellido;
+  late String correo;
+  late String password;
+
+  @override
+  void initState() {
+    super.initState();
+    nombre = widget.nombre;
+    apellido = widget.apellido;
+    correo = widget.correo;
+    password = widget.password;
+  }
+
+  void _editarPerfil() async {
+    final resultado = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditarPerfilScreen(
+          nombre: nombre,
+          apellido: apellido,
+          correo: correo,
+          password: password,
+        ),
+      ),
+    );
+    if (resultado != null) {
+      setState(() {
+        nombre = resultado['nombre'];
+        apellido = resultado['apellido'];
+        correo = resultado['correo'];
+        password = resultado['password'];
+      });
+    }
+  }
+
+  void _confirmarCerrarSesion(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Confirmación de cerrado de sesión'),
+          content: Text('¿Está seguro de que desea cerrar sesión?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+              child: Text('Sí, cerrar sesión'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +97,7 @@ PerfilScreen({required this.nombre, required this. apellido, required this.corre
           PopupMenuButton<String>(
             onSelected: (value) {
               if (value == 'editar') {
-                // Acción para editar perfil
+                _editarPerfil();
               }
             },
             itemBuilder: (context) => [
@@ -53,10 +124,11 @@ PerfilScreen({required this.nombre, required this. apellido, required this.corre
               '$nombre $apellido',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
-            _buildInfoField('Primer Nombre:', nombre ),
+            SizedBox(height: 10),
+            _buildInfoField('Primer Nombre:', nombre),
             _buildInfoField('Apellido:', apellido),
             _buildInfoField('Correo Electrónico:', correo),
+            _buildInfoField("Password", password),
             Spacer(),
             SizedBox(
               width: double.infinity,
@@ -70,7 +142,7 @@ PerfilScreen({required this.nombre, required this. apellido, required this.corre
                 },
                 child: Text(
                   'Cerrar Sesión',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(fontSize: 15, color: Colors.white),
                 ),
               ),
             ),
@@ -86,7 +158,7 @@ PerfilScreen({required this.nombre, required this. apellido, required this.corre
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: TextStyle(fontSize: 14, color: Colors.grey)),
+          Text(label, style: TextStyle(fontSize: 14, color: Colors.black)),
           TextField(
             decoration: InputDecoration(
               hintText: value,
@@ -100,34 +172,88 @@ PerfilScreen({required this.nombre, required this. apellido, required this.corre
   }
 }
 
-void _confirmarCerrarSesion(BuildContext context){
-  showDialog(
-    context: context, 
-    builder: (context){
-      return AlertDialog(
-        title: Text('Confirmación de cerrado de sesión'),
-        content: Text ('¿Está seguro de que desea cerrar sesión?'),
-        actions: [
-          TextButton(
-            onPressed: ()=> Navigator.pop(context),
-            child: Text ('Cancelar'),
-          ),
-          TextButton(
-            onPressed: (){
-              Navigator.pop(context);
-              Navigator.pushReplacement(context, 
-              MaterialPageRoute(builder: (context)=> LoginScreen()),
-              );
-            },
-            child: Text ('Sí, cerrar sesión'),
-            )
-        ]
-      );
-    }
-  );
+class EditarPerfilScreen extends StatefulWidget {
+  final String nombre;
+  final String apellido;
+  final String correo;
+  final String password;
+
+  EditarPerfilScreen({
+    required this.nombre,
+    required this.apellido,
+    required this.correo,
+    required this.password,
+  });
+
+  @override
+  _EditarPerfilScreenState createState() => _EditarPerfilScreenState();
 }
 
+class _EditarPerfilScreenState extends State<EditarPerfilScreen> {
+  late TextEditingController _nombreController;
+  late TextEditingController _apellidoController;
+  late TextEditingController _correoController;
+  late TextEditingController _passwordController;
 
+  @override
+  void initState() {
+    super.initState();
+    _nombreController = TextEditingController(text: widget.nombre);
+    _apellidoController = TextEditingController(text: widget.apellido);
+    _correoController = TextEditingController(text: widget.correo);
+    _passwordController = TextEditingController(text: widget.password);
+  }
 
+  @override
+  void dispose() {
+    _nombreController.dispose();
+    _apellidoController.dispose();
+    _correoController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
-
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Editar Perfil')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _nombreController,
+              decoration: InputDecoration(labelText: 'Nombre'),
+            ),
+            TextField(
+              controller: _apellidoController,
+              decoration: InputDecoration(labelText: 'Apellido'),
+            ),
+            TextField(
+              controller: _correoController,
+              decoration: InputDecoration(labelText: 'Correo'),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: 'Contraseña'),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, {
+                  'nombre': _nombreController.text,
+                  'apellido': _apellidoController.text,
+                  'correo': _correoController.text,
+                  'password': _passwordController.text,
+                });
+              },
+              child: Text('Guardar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

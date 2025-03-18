@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectofinal/view/profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +25,14 @@ class HomeScreen extends StatelessWidget {
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
           IconButton(icon: Icon(Icons.history), onPressed: () {}),
           IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
-          IconButton(icon: Icon(Icons.person),onPressed:(){},),
+          IconButton(icon: Icon(Icons.person),onPressed:(){
+            Navigator.push(context,
+            MaterialPageRoute(builder: (context)=>PerfilScreen(
+              nombre: 'Nombre', 
+              apellido: 'Apellido',
+              correo: 'correo',
+              password: 'password')));
+           },),
         ],
       ),
       body: SingleChildScrollView(

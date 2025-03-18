@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:proyectofinal/view/profile.dart';
+//import 'home.dart';
 
 class RegistroScreen extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class RegistroScreen extends StatefulWidget {
 class _RegistroScreenState extends State<RegistroScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nombreController = TextEditingController();
+  final TextEditingController _apellidoController =TextEditingController(); 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -57,7 +59,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   controller: _nombreController,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
-                    hintText: "Nombre completo",
+                    hintText: "Primer Nombre",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -65,7 +67,25 @@ class _RegistroScreenState extends State<RegistroScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingrese su nombre y apellido';
+                      return 'Ingrese su nombre';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: _apellidoController,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    hintText: "Primer Apellido",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Ingrese su apellido';
                     }
                     return null;
                   },
@@ -117,13 +137,18 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     if (_formKey.currentState!.validate()) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                        MaterialPageRoute(builder: (context) => PerfilScreen(
+                          nombre: _nombreController.text,
+                          apellido: _apellidoController.text,
+                          correo: _emailController.text,
+                          password: _passwordController.text,
+                        )),
                       );
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
-                    minimumSize: Size(double.infinity, 50),
+                    minimumSize: Size(double.infinity, 40),
                   ),
                   child: Text('Continuar', style: TextStyle(color: Colors.white)),
                 ),
