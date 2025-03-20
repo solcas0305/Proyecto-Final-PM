@@ -72,7 +72,7 @@ class _RegistroScreenState extends State<RegistroScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 TextFormField(
                   controller: _apellidoController,
                   keyboardType: TextInputType.visiblePassword,
