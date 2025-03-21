@@ -125,7 +125,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            _buildInfoField('Primer Nombre:', nombre),
+            _buildInfoField('Nombre:', nombre),
             _buildInfoField('Apellido:', apellido),
             _buildInfoField('Correo Electrónico:', correo),
             _buildInfoField("Password", password),
