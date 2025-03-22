@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777058405886",
+    "project_id": "base-de-datos-autos-honduras",
+    "storage_bucket": "base-de-datos-autos-honduras.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777058405886:android:7d217399677ed76ba244af",
+        "android_client_info": {
+          "package_name": "com.example.proyectofinal1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3R8XMH7BTwUiy8nDeLzdHeMaKbZfNctY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
